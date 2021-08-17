@@ -12,5 +12,6 @@ RUN mkdir -p ${NEXTCLOUD_DATA_DIR}; \
 VOLUME ${NEXTCLOUD_DATA_DIR}
 
 COPY myentrypoint.sh /myentrypoint.sh
+RUN chmod +x /myentrypoint.sh
 ENTRYPOINT ["/myentrypoint.sh"]
 CMD ["apache2-foreground"]
