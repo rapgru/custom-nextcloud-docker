@@ -11,6 +11,8 @@ RUN mkdir -p ${NEXTCLOUD_DATA_DIR}; \
 
 VOLUME ${NEXTCLOUD_DATA_DIR}
 
+RUN apt-get install -y s3fs
+
 COPY myentrypoint.sh /myentrypoint.sh
 RUN chmod +x /myentrypoint.sh
 ENTRYPOINT ["/myentrypoint.sh"]
