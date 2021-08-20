@@ -9,10 +9,11 @@ echo "NC_ROOT $NC_ROOT"
 echo "DATA $DATA"
 
 while true; do
-  echo "appdata syncinc"
+  echo "checking if appdata folder exists"
 
   APPDATA=`ls -d $DATA/appdata_* || true`
   if [ -n "$APPDATA" ]; then
+      echo "appdata exists - waiting for modifications"
       inotifywait -r -e modify,attrib,close_write,move,create,delete "$APPDATA"
 
       if [ "$(id -u)" = 0 ]; then
@@ -32,6 +33,7 @@ while true; do
           done
       done
   else
+    echo "waiting until appdata exists"
     sleep 240
   fi
 done
