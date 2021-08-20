@@ -1,10 +1,11 @@
 #!/bin/sh -x
 
 echo "starting sync loop"
+sleep 240
+#while true; do
+  #inotifywait -r -e modify,attrib,close_write,move,create,delete "$APPDATA"
 
-while true; do
-  inotifywait -r -e modify,attrib,close_write,move,create,delete "$APPDATA"
-  echo "appdata changed"
+  echo "appdata syncinc"
 
   APPDATA=`ls -d $DATA/appdata_* || true`
   if [ -n "$APPDATA" ]; then
@@ -27,4 +28,4 @@ while true; do
       done
 
   fi
-done
+#done
