@@ -9,12 +9,12 @@ echo "NC_ROOT $NC_ROOT"
 echo "DATA $DATA"
 
 while true; do
-  echo "checking if appdata folder exists"
+  echo "syncing appdata"
 
   APPDATA=`ls -d $DATA/appdata_* || true`
   if [ -n "$APPDATA" ]; then
-      echo "appdata exists - waiting for modifications"
-      inotifywait -r -e modify,attrib,close_write,move,create,delete "$APPDATA"
+      echo "appdata exists - syncing"
+      # inotifywait -r -e modify,attrib,close_write,move,create,delete "$APPDATA"
 
       if [ "$(id -u)" = 0 ]; then
           rsync_options="-rlDog --chown www-data:root"
@@ -32,8 +32,7 @@ while true; do
               fi
           done
       done
-  else
-    echo "waiting until appdata exists"
-    sleep 240
   fi
+  
+  sleep 240
 done
