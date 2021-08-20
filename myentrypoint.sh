@@ -31,6 +31,6 @@ echo 'IAM_ROLE is not set - mounting S3 with credentials from ENV'
 /usr/bin/s3fs  ${S3_BUCKET} ${NEXTCLOUD_DATA_DIR} -d -d -f -o url=${S3_URL},allow_other,retries=5 &
 echo 'started...'
 
-/copy.sh &
+/sync.sh &
 
 /entrypoint.sh "$ARGS"
