@@ -31,26 +31,6 @@ echo 'IAM_ROLE is not set - mounting S3 with credentials from ENV'
 /usr/bin/s3fs  ${S3_BUCKET} ${NEXTCLOUD_DATA_DIR} -d -d -f -o url=${S3_URL},endpoint=${S3_REGION},allow_other,retries=5 &
 echo 'started...'
 
-APPDATA=`ls -d $DATA/appdata_* || true`
-if [ -n "$APPDATA" ]; then
-
-    if [ "$(id -u)" = 0 ]; then
-        rsync_options="-rlDog --chown www-data:root"
-    else
-        rsync_options="-rlD"
-    fi
-    # rsync $rsync_options --delete --exclude-from=/upgrade.exclude /usr/src/nextcloud/ /var/www/html/
-
-    for dir1 in $APPDATA; do
-        for dir2 in css js; do
-            if [ -d "$dir1/$dir2" ]; then
-                rsync $rsync_options \
-                "$dir1/$dir2" "$NC_ROOT"
-                echo "Updated $dir2 folder"
-            fi
-        done
-    done
-
-fi
+/copy.sh &
 
 /entrypoint.sh "$ARGS"

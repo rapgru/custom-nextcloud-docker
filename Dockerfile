@@ -11,9 +11,10 @@ RUN mkdir -p ${NEXTCLOUD_DATA_DIR}; \
 
 VOLUME ${NEXTCLOUD_DATA_DIR}
 
-RUN apt-get install -y s3fs
+RUN apt-get install -y s3fs inotify-tools
 
 COPY myentrypoint.sh /myentrypoint.sh
-RUN chmod +x /myentrypoint.sh
+COPY myentrypoint.sh /sync.sh
+RUN chmod +x /myentrypoint.sh /sync.sh
 ENTRYPOINT ["/myentrypoint.sh"]
 CMD ["apache2-foreground"]
