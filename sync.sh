@@ -1,14 +1,19 @@
 #!/bin/sh -x
 
 echo "starting sync loop"
-sleep 240
-#while true; do
-  #inotifywait -r -e modify,attrib,close_write,move,create,delete "$APPDATA"
 
+NC_ROOT="$1"
+DATA="$2"
+
+echo "NC_ROOT $NC_ROOT"
+echo "DATA $DATA"
+
+while true; do
   echo "appdata syncinc"
 
   APPDATA=`ls -d $DATA/appdata_* || true`
   if [ -n "$APPDATA" ]; then
+      inotifywait -r -e modify,attrib,close_write,move,create,delete "$APPDATA"
 
       if [ "$(id -u)" = 0 ]; then
           rsync_options="-rlDog --chown www-data:root"
@@ -26,6 +31,7 @@ sleep 240
               fi
           done
       done
-
+  else
+    sleep 240
   fi
-#done
+done
