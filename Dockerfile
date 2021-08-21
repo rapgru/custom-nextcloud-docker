@@ -5,8 +5,6 @@ FROM nextcloud:${IMAGE_TAG}
 
 ARG NEXTCLOUD_DATA_DIR
 
-RUN mkdir /s3
-
 VOLUME ${NEXTCLOUD_DATA_DIR}
 
 RUN apt-get update -y; apt-get install -y s3fs inotify-tools

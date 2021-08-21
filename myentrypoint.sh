@@ -31,6 +31,11 @@ echo 'IAM_ROLE is not set - mounting S3 with credentials from ENV'
 nohup /usr/bin/s3fs ${S3_BUCKET} /s3 -f -o url=${S3_URL},allow_other,retries=5,umask=007 &
 echo 'started...'
 
+while [ ! -d /home/rgruber/aaa ]; do
+    echo "waiting for s3fs to mount bucket"
+    sleep 5
+done
+
 mkdir -p ${NEXTCLOUD_DATA_DIR}; \
 chown -R www-data:root ${NEXTCLOUD_DATA_DIR}; \
 chmod -R 0770 ${NEXTCLOUD_DATA_DIR}
