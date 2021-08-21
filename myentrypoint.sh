@@ -33,7 +33,7 @@ echo 'started...'
 
 FNDMNT=
 while [ -z "$FNDMNT" ]; do
-    FINDMNT=$(findmnt --target /s3)
+    FINDMNT=$(findmnt --mountpoint /s3)
     echo "waiting for s3fs to mount bucket"
     sleep 5
 done
