@@ -28,8 +28,12 @@ echo "${AWS_KEY}:${AWS_SECRET_KEY}" > /etc/passwd-s3fs
 chmod 0400 /etc/passwd-s3fs
 
 echo 'IAM_ROLE is not set - mounting S3 with credentials from ENV'
-nohup /usr/bin/s3fs ${S3_BUCKET} ${NEXTCLOUD_DATA_DIR} -f -o url=${S3_URL},allow_other,retries=5 &
+nohup /usr/bin/s3fs ${S3_BUCKET} /s3 -f -o url=${S3_URL},allow_other,retries=5 &
 echo 'started...'
+
+mkdir -p ${NEXTCLOUD_DATA_DIR}; \
+chown -R www-data:root ${NEXTCLOUD_DATA_DIR}; \
+chmod -R 0770 ${NEXTCLOUD_DATA_DIR}
 
 nohup /sync.sh "$NC_ROOT" "$DATA" &
 
