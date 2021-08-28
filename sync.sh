@@ -15,9 +15,9 @@ while true; do
   # get appdata folder if it exists inside the data directory
   APPDATA=`ls -d $DATA/appdata_* || true`
   if [ -n "$APPDATA" ]; then
-      echo "appdata exists - waiting for modifications"
+      echo "appdata exists - syncing"
       # wait for modifications of the appdata dir
-      inotifywait -r -e modify,attrib,close_write,move,create,delete "$APPDATA"
+      # inotifywait -r -e modify,attrib,close_write,move,create,delete "$APPDATA"
 
       if [ "$(id -u)" = 0 ]; then
           rsync_options="-rlDog --chown www-data:root"
@@ -35,6 +35,8 @@ while true; do
               fi
           done
       done
+
+      sleep 240
   else
     echo "waiting until appdata exists"
     sleep 240
