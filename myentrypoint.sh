@@ -28,4 +28,5 @@ chown -R www-data:root ${NEXTCLOUD_DATA_DIR}; \
 chmod -R 0770 ${NEXTCLOUD_DATA_DIR}
 
 # start appdata sync and actual nextcloud entrypoint in parallel with gnu parallel
-(echo /sync.sh "$NC_ROOT" "$DATA"; echo /entrypoint.sh "$ARGS") | parallel
+(trap 'kill 0' SIGINT; /sync.sh "$NC_ROOT" "$DATA" & /entrypoint.sh "$ARGS")
+# (echo /sync.sh "$NC_ROOT" "$DATA"; echo /entrypoint.sh "$ARGS") | parallel
