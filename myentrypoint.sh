@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/bin/bash -x
 set -eu
 
 # check argument given to entrypoint script
