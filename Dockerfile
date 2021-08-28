@@ -7,7 +7,7 @@ ARG NEXTCLOUD_DATA_DIR
 
 RUN mkdir /s3
 
-RUN apt-get update -y; apt-get install -y s3fs inotify-tools
+RUN apt-get update -y; apt-get install -y s3fs inotify-tools parallel
 
 COPY myentrypoint.sh /myentrypoint.sh
 COPY sync.sh /sync.sh

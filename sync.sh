@@ -2,6 +2,7 @@
 
 echo "starting sync loop"
 
+# get arguments
 NC_ROOT="$1"
 DATA="$2"
 
@@ -11,9 +12,11 @@ echo "DATA $DATA"
 while true; do
   echo "checking if appdata folder exists"
 
+  # get appdata folder if it exists inside the data directory
   APPDATA=`ls -d $DATA/appdata_* || true`
   if [ -n "$APPDATA" ]; then
       echo "appdata exists - waiting for modifications"
+      # wait for modifications of the appdata dir
       inotifywait -r -e modify,attrib,close_write,move,create,delete "$APPDATA"
 
       if [ "$(id -u)" = 0 ]; then
